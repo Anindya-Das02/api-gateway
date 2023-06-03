@@ -1,0 +1,26 @@
+server:
+  port: 7443
+
+spring:
+  application:
+    name: "API-GATEWAY-SERVICE"
+  cloud:
+    gateway:
+      routes:
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/api/order/**
+        - id: payment-service
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/api/payment/**
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry : true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
